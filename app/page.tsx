@@ -213,15 +213,25 @@ export default function GlasshavenHome() {
       if (savedHistory) setSubmissionHistory(JSON.parse(savedHistory));
     }, 0);
 
+  React.useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        if (selectedPropertyForViewing) setSelectedPropertyForViewing(null);
+        if (isQuoteModalOpen) setIsQuoteModalOpen(false);
+        if (isChatOpen) setIsChatOpen(false);
+        if (isMobileMenuOpen) setIsMobileMenuOpen(false);
+      }
+    };
     window.addEventListener("scroll", handleScroll);
+    window.addEventListener("keydown", handleKeyDown);
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      clearTimeout(timer);
+      window.removeEventListener("keydown", handleKeyDown);
     };
-  }, []);
+  }, [selectedPropertyForViewing, isQuoteModalOpen, isChatOpen, isMobileMenuOpen]);
 
   React.useEffect(() => {
     if (chatEndRef.current) {
@@ -1176,9 +1186,20 @@ export default function GlasshavenHome() {
                   return (
                     <g
                       key={room.id}
+                      tabIndex={0}
+                      role="button"
+                      aria-label={`${room.name}, area: ${room.area}`}
                       onMouseEnter={() => setHoveredRoomId(room.id)}
                       onMouseLeave={() => setHoveredRoomId(null)}
-                      className="cursor-pointer"
+                      onFocus={() => setHoveredRoomId(room.id)}
+                      onBlur={() => setHoveredRoomId(null)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                          e.preventDefault();
+                          setHoveredRoomId(room.id);
+                        }
+                      }}
+                      className="cursor-pointer focus-visible:outline-none"
                     >
                       {/* Room Area Rectangle */}
                       <motion.rect
