@@ -197,6 +197,7 @@ export default function GlasshavenHome() {
   ]);
   const [chatInput, setChatInput] = React.useState("");
   const [isChatLoading, setIsChatLoading] = React.useState(false);
+  const chatEndRef = React.useRef<HTMLDivElement>(null);
   // --- VALUATION LEAD MAGNET STATE ---
   const [valStep, setValStep] = React.useState(1);
   const [valType, setValType] = React.useState<"Villa" | "Estate" | "Penthouse" | "Cabin">("Villa");
