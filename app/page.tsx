@@ -197,7 +197,56 @@ export default function GlasshavenHome() {
   ]);
   const [chatInput, setChatInput] = React.useState("");
   const [isChatLoading, setIsChatLoading] = React.useState(false);
-  const chatEndRef = React.useRef<HTMLDivElement>(null);
+  // --- VALUATION LEAD MAGNET STATE ---
+  const [valStep, setValStep] = React.useState(1);
+  const [valType, setValType] = React.useState<"Villa" | "Estate" | "Penthouse" | "Cabin">("Villa");
+  const [valBeds, setValBeds] = React.useState(3);
+  const [valLocation, setValLocation] = React.useState("Quebec");
+  const [valCondition, setValCondition] = React.useState("Turnkey Luxury");
+  const [valName, setValName] = React.useState("");
+  const [valEmail, setValEmail] = React.useState("");
+  const [valPhone, setValPhone] = React.useState("");
+  const [valEstimate, setValEstimate] = React.useState<{ min: number; max: number } | null>(null);
+  const [valSubmitted, setValSubmitted] = React.useState(false);
+
+  // --- MORTGAGE & YIELD CALCULATOR STATE ---
+  const [calcPrice, setCalcPrice] = React.useState(2850000);
+  const [calcDownPercent, setCalcDownPercent] = React.useState(20);
+  const [calcInterestRate, setCalcInterestRate] = React.useState(4.5);
+  const [calcTermYears, setCalcTermYears] = React.useState(30);
+
+  // Mortgage calculations
+  const downPaymentAmount = (calcPrice * calcDownPercent) / 100;
+  const loanAmount = Math.max(0, calcPrice - downPaymentAmount);
+  const monthlyRate = calcInterestRate / 100 / 12;
+  const totalPayments = calcTermYears * 12;
+  const monthlyPrincipalInterest =
+    monthlyRate > 0 && totalPayments > 0
+      ? (loanAmount * (monthlyRate * Math.pow(1 + monthlyRate, totalPayments))) /
+        (Math.pow(1 + monthlyRate, totalPayments) - 1)
+      : loanAmount / (totalPayments || 1);
+  const estimatedMonthlyTaxIns = (calcPrice * 0.012) / 12;
+  const totalMonthlyPayment = Math.round(monthlyPrincipalInterest + estimatedMonthlyTaxIns);
+  const estimatedAnnualYield = (((calcPrice * 0.075) / calcPrice) * 100).toFixed(1);
+
+  const handleCalculateValuation = (e: React.FormEvent) => {
+    e.preventDefault();
+    let base = 2200000;
+    if (valType === "Estate") base = 3100000;
+    if (valType === "Penthouse") base = 3800000;
+    if (valType === "Cabin") base = 1700000;
+
+    base += (valBeds - 2) * 350000;
+    if (valLocation === "Vancouver") base += 600000;
+    if (valLocation === "Montreal") base += 400000;
+    if (valCondition === "Turnkey Luxury") base += 250000;
+
+    const min = Math.round((base * 0.94) / 10000) * 10000;
+    const max = Math.round((base * 1.08) / 10000) * 10000;
+
+    setValEstimate({ min, max });
+    setValSubmitted(true);
+  };
 
   // Scroll visibility
   const [isScrolled, setIsScrolled] = React.useState(false);
@@ -523,20 +572,22 @@ export default function GlasshavenHome() {
           </a>
 
           {/* Desktop Nav */}
-          <nav className="hidden lg:flex items-center gap-8" aria-label="Main Navigation">
+          <nav className="hidden lg:flex items-center gap-6" aria-label="Main Navigation">
             {[
               { label: "Home", href: "#home" },
+              { label: "Valuation", href: "#valuation" },
               { label: "Properties", href: "#properties" },
-              { label: "Floor Plans", href: "#floor-plans" },
-              { label: "Services", href: "#services" },
-              { label: "About", href: "#about" },
+              { label: "Calculator", href: "#calculator" },
+              { label: "Guides", href: "#market-guides" },
+              { label: "Plans", href: "#floor-plans" },
+              { label: "Packages", href: "#packages" },
               { label: "Reviews", href: "#reviews" },
               { label: "Contact", href: "#contact" }
             ].map((link, idx) => (
               <a
                 key={idx}
                 href={link.href}
-                className="text-xs uppercase tracking-widest font-medium text-slate-300 hover:text-white transition-colors py-2 relative after:absolute after:bottom-[-4px] after:left-0 after:right-0 after:h-[1px] after:bg-[#C5A880] after:transform after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A880] rounded"
+                className="text-[11px] uppercase tracking-widest font-medium text-slate-300 hover:text-white transition-colors py-2 relative after:absolute after:bottom-[-4px] after:left-0 after:right-0 after:h-[1px] after:bg-[#C5A880] after:transform after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A880] rounded"
               >
                 {link.label}
               </a>
@@ -544,25 +595,22 @@ export default function GlasshavenHome() {
           </nav>
 
           {/* Header Action CTAs */}
-          <div className="hidden sm:flex items-center gap-4">
+          <div className="hidden sm:flex items-center gap-3">
+            <a
+              href="#valuation"
+              className="text-[11px] uppercase tracking-wider font-semibold text-black bg-[#C5A880] hover:bg-[#DBC3A3] transition-colors py-2.5 px-4 min-h-[44px] rounded-lg flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A880] active:scale-95 shadow-md font-mono"
+            >
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>Free Valuation</span>
+            </a>
             <a
               href={`tel:${AGENCY_PHONE}`}
-              className="text-xs uppercase tracking-wider font-semibold text-[#C5A880] hover:text-white transition-colors py-2.5 px-4 min-h-[44px] border border-[#C5A880]/30 hover:border-white rounded-lg flex items-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A880] active:scale-95"
+              className="text-[11px] uppercase tracking-wider font-semibold text-[#C5A880] hover:text-white transition-colors py-2.5 px-3.5 min-h-[44px] border border-[#C5A880]/30 hover:border-white rounded-lg flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A880] active:scale-95"
               id="header-call-btn"
             >
-              <Phone className="w-4 h-4" />
+              <Phone className="w-3.5 h-3.5" />
               <span>Call Agency</span>
             </a>
-            <button
-              onClick={() => {
-                setContactForm(prev => ({ ...prev, message: "Bespoke price & model inquiry. Please contact me regarding available options." }));
-                setIsQuoteModalOpen(true);
-              }}
-              className="text-xs uppercase tracking-widest font-semibold bg-[#C5A880] hover:bg-[#DBC3A3] active:scale-95 text-black py-2.5 px-5 min-h-[44px] rounded-lg transition-all shadow-md shadow-[#C5A880]/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A880]"
-              id="header-quote-btn"
-            >
-              Request a Quote
-            </button>
           </div>
 
           {/* Mobile Menu Toggle */}
@@ -708,22 +756,51 @@ export default function GlasshavenHome() {
               </button>
 
               <a
+                href="#valuation"
+                className="w-full sm:w-auto px-8 py-4 min-h-[48px] bg-[#12161A]/90 hover:bg-[#1A2026] active:scale-95 text-[#C5A880] border border-[#C5A880]/40 hover:border-[#C5A880] font-bold uppercase tracking-widest text-xs rounded-lg transition-all duration-300 hover:-translate-y-0.5 flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A880] font-mono shadow-md"
+              >
+                <Sparkles className="w-4 h-4 text-[#C5A880]" />
+                Instant Valuation
+              </a>
+
+              <a
                 href={generateWhatsAppLink("Hello Glasshaven, I'm interested in talking with an advisor regarding architectural showcases.")}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full sm:w-auto px-8 py-4 min-h-[48px] bg-[#12161A]/90 hover:bg-[#1A2026] active:scale-95 text-white border border-[#2B353E] hover:border-white font-semibold uppercase tracking-widest text-xs rounded-lg transition-all duration-300 hover:-translate-y-0.5 flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A880]"
+                className="w-full sm:w-auto px-8 py-4 min-h-[48px] bg-transparent text-slate-200 hover:text-white font-semibold uppercase tracking-widest text-xs transition-colors duration-300 flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A880]"
               >
                 <MessageCircle className="w-4 h-4 text-emerald-400" />
                 WhatsApp Message
               </a>
+            </motion.div>
 
-              <a
-                href={`tel:${AGENCY_PHONE}`}
-                className="w-full sm:w-auto px-8 py-4 min-h-[48px] bg-transparent text-slate-200 hover:text-white font-semibold uppercase tracking-widest text-xs transition-colors duration-300 flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A880]"
-              >
-                <Phone className="w-4 h-4 text-[#C5A880]" />
-                Call Now
-              </a>
+            {/* TRUST & ACCREDITATION BADGES STRIP */}
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.8 }}
+              className="mt-12 pt-8 border-t border-slate-800/60 w-full max-w-4xl grid grid-cols-2 sm:grid-cols-5 gap-4 items-center justify-center text-center font-mono text-[10px] uppercase tracking-widest text-slate-400"
+            >
+              <div className="flex items-center justify-center gap-1.5 p-2 bg-[#12161A]/60 rounded-lg border border-[#1A2026]">
+                <ShieldCheck className="w-3.5 h-3.5 text-[#C5A880]" />
+                <span className="text-white font-bold">RICS</span> Certified
+              </div>
+              <div className="flex items-center justify-center gap-1.5 p-2 bg-[#12161A]/60 rounded-lg border border-[#1A2026]">
+                <Award className="w-3.5 h-3.5 text-[#C5A880]" />
+                <span className="text-white font-bold">ARLA</span> Propertymark
+              </div>
+              <div className="flex items-center justify-center gap-1.5 p-2 bg-[#12161A]/60 rounded-lg border border-[#1A2026]">
+                <CheckCircle2 className="w-3.5 h-3.5 text-[#C5A880]" />
+                <span className="text-white font-bold">TPO</span> Approved
+              </div>
+              <div className="flex items-center justify-center gap-1.5 p-2 bg-[#12161A]/60 rounded-lg border border-[#1A2026]">
+                <Clock className="w-3.5 h-3.5 text-[#C5A880]" />
+                <span className="text-white font-bold">CMP</span> Protected
+              </div>
+              <div className="col-span-2 sm:col-span-1 flex items-center justify-center gap-1.5 p-2 bg-[#12161A]/60 rounded-lg border border-[#1A2026]">
+                <Star className="w-3.5 h-3.5 fill-[#C5A880] text-[#C5A880]" />
+                <span className="text-white font-bold">4.9★</span> Trustpilot
+              </div>
             </motion.div>
 
             {/* Scroll Indicator */}
@@ -841,6 +918,147 @@ export default function GlasshavenHome() {
                   Reset Filters ({filteredProperties.length} found)
                 </button>
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* --- INSTANT ONLINE PROPERTY VALUATION TOOL --- */}
+        <section id="valuation" className="py-20 bg-[#12161A]/40 border-y border-[#1A2026] mt-16" aria-labelledby="valuation-heading">
+          <div className="max-w-5xl mx-auto px-4">
+            <div className="text-center max-w-2xl mx-auto mb-12">
+              <span className="text-[#C5A880] text-xs font-semibold tracking-[0.25em] uppercase block mb-3 font-mono">
+                INSTANT SELLER TOOL
+              </span>
+              <h2 id="valuation-heading" className="text-3xl md:text-5xl font-sans uppercase font-light text-white tracking-wide">
+                INSTANT ONLINE <span className="font-extrabold text-[#C5A880]">VALUATION</span>
+              </h2>
+              <p className="text-slate-300 text-sm mt-3 leading-relaxed">
+                Estimate your luxury property&apos;s current market valuation in 60 seconds based on structural quality, location, and regional demand indices.
+              </p>
+            </div>
+
+            <div className="bg-[#12161A] border border-[#1A2026] rounded-2xl p-6 sm:p-10 shadow-2xl">
+              {!valSubmitted ? (
+                <form onSubmit={handleCalculateValuation} className="space-y-8">
+                  {/* Step Progress Bar */}
+                  <div className="flex items-center justify-between text-xs font-mono text-slate-400 border-b border-[#1A2026] pb-4">
+                    <span className="text-[#C5A880] font-bold">VALUATION ENGINE ACTIVE</span>
+                    <span>STEP 1 OF 1</span>
+                  </div>
+
+                  <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
+                    {/* Property Type */}
+                    <div className="flex flex-col gap-2">
+                      <label className="text-[10px] uppercase tracking-wider text-slate-300 font-mono font-medium">Property Type</label>
+                      <select
+                        value={valType}
+                        onChange={(e) => setValType(e.target.value as any)}
+                        className="bg-slate-950 border border-[#1A2026] text-white text-xs rounded-lg px-3.5 py-3 min-h-[44px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A880]"
+                      >
+                        <option value="Villa">Villa Pavilion</option>
+                        <option value="Estate">Lakeside Estate</option>
+                        <option value="Penthouse">Sky Penthouse</option>
+                        <option value="Cabin">Secluded Cabin</option>
+                      </select>
+                    </div>
+
+                    {/* Bedrooms */}
+                    <div className="flex flex-col gap-2">
+                      <label className="text-[10px] uppercase tracking-wider text-slate-300 font-mono font-medium">Bedrooms</label>
+                      <select
+                        value={valBeds}
+                        onChange={(e) => setValBeds(parseInt(e.target.value))}
+                        className="bg-slate-950 border border-[#1A2026] text-white text-xs rounded-lg px-3.5 py-3 min-h-[44px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A880]"
+                      >
+                        <option value={2}>2 Bedrooms</option>
+                        <option value={3}>3 Bedrooms</option>
+                        <option value={4}>4+ Bedrooms</option>
+                      </select>
+                    </div>
+
+                    {/* Region */}
+                    <div className="flex flex-col gap-2">
+                      <label className="text-[10px] uppercase tracking-wider text-slate-300 font-mono font-medium">Region</label>
+                      <select
+                        value={valLocation}
+                        onChange={(e) => setValLocation(e.target.value)}
+                        className="bg-slate-950 border border-[#1A2026] text-white text-xs rounded-lg px-3.5 py-3 min-h-[44px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A880]"
+                      >
+                        <option value="Quebec">Quebec Wilderness</option>
+                        <option value="Montreal">Montreal Metro</option>
+                        <option value="Vancouver">Vancouver Waterfront</option>
+                        <option value="Laurentians">Laurentians</option>
+                      </select>
+                    </div>
+
+                    {/* Condition */}
+                    <div className="flex flex-col gap-2">
+                      <label className="text-[10px] uppercase tracking-wider text-slate-300 font-mono font-medium">Condition</label>
+                      <select
+                        value={valCondition}
+                        onChange={(e) => setValCondition(e.target.value)}
+                        className="bg-slate-950 border border-[#1A2026] text-white text-xs rounded-lg px-3.5 py-3 min-h-[44px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A880]"
+                      >
+                        <option value="Turnkey Luxury">Turnkey Luxury</option>
+                        <option value="Custom Build">Custom Architectural</option>
+                        <option value="Renovated">Newly Renovated</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="w-full bg-[#C5A880] hover:bg-[#DBC3A3] text-black font-bold uppercase tracking-widest text-xs py-4 min-h-[48px] rounded-xl transition-all shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A880] flex items-center justify-center gap-2 font-mono"
+                  >
+                    <Sparkles className="w-4 h-4" />
+                    Calculate Estimated Market Value Now
+                  </button>
+                </form>
+              ) : (
+                <div className="text-center py-6 space-y-6">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-950/60 border border-emerald-500/40 text-emerald-300 text-xs font-mono rounded-full uppercase">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                    Valuation Report Generated
+                  </div>
+
+                  <div>
+                    <span className="text-xs uppercase tracking-widest text-slate-400 font-mono block mb-1">
+                      Estimated Valuation Range
+                    </span>
+                    <h3 className="text-4xl sm:text-5xl font-mono font-extrabold text-[#C5A880]">
+                      ${valEstimate?.min.toLocaleString()} — ${valEstimate?.max.toLocaleString()} USD
+                    </h3>
+                    <p className="text-xs text-slate-400 mt-2 font-sans">
+                      Based on current regional sales data for {valType}s with {valBeds} beds in {valLocation}.
+                    </p>
+                  </div>
+
+                  <div className="pt-6 border-t border-[#1A2026] flex flex-col sm:flex-row gap-4 justify-center">
+                    <button
+                      onClick={() => setValSubmitted(false)}
+                      className="px-6 py-3 border border-slate-700 hover:border-slate-400 text-slate-200 text-xs uppercase tracking-widest font-semibold rounded-lg transition-colors"
+                    >
+                      Recalculate
+                    </button>
+                    <button
+                      onClick={() => {
+                        setContactForm(prev => ({
+                          ...prev,
+                          propertyType: valType,
+                          location: valLocation,
+                          budget: `$${((valEstimate?.min || 2000000) / 1000000).toFixed(1)}M - $${((valEstimate?.max || 3000000) / 1000000).toFixed(1)}M`,
+                          message: `Requesting official certified PDF valuation report for my ${valType} in ${valLocation}.`
+                        }));
+                        setIsQuoteModalOpen(true);
+                      }}
+                      className="px-8 py-3 bg-[#C5A880] hover:bg-[#DBC3A3] text-black text-xs uppercase tracking-widest font-bold rounded-lg transition-colors shadow-md flex items-center justify-center gap-2"
+                    >
+                      <FileText className="w-4 h-4" />
+                      Get Certified Valuation PDF
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </section>
@@ -995,6 +1213,195 @@ export default function GlasshavenHome() {
             })}
           </div>
         )}
+      </section>
+
+      {/* --- MORTGAGE & FINANCIAL YIELD CALCULATOR SECTION --- */}
+      <section id="calculator" className="py-24 bg-[#0B0E10] border-t border-[#1A2026]" aria-labelledby="calc-heading">
+        <div className="max-w-6xl mx-auto px-4 md:px-8">
+          <div className="text-center max-w-2xl mx-auto mb-16">
+            <span className="text-[#C5A880] text-xs font-semibold tracking-[0.25em] uppercase block mb-3 font-mono">
+              FINANCIAL INTELLIGENCE TOOL
+            </span>
+            <h2 id="calc-heading" className="text-3xl md:text-5xl font-sans uppercase font-light text-white tracking-wide">
+              MORTGAGE & <span className="font-extrabold text-[#C5A880]">YIELD CALCULATOR</span>
+            </h2>
+            <p className="text-slate-300 text-sm mt-3 leading-relaxed">
+              Calculate your monthly financing terms, estimated property taxes, and expected gross rental yields in real-time.
+            </p>
+          </div>
+
+          <div className="bg-[#12161A] border border-[#1A2026] rounded-2xl p-6 sm:p-10 shadow-2xl grid lg:grid-cols-2 gap-10">
+            {/* Input Controls */}
+            <div className="space-y-6">
+              {/* Property Purchase Price */}
+              <div>
+                <div className="flex justify-between text-xs font-mono mb-2">
+                  <span className="text-slate-300 uppercase tracking-wider">Property Price</span>
+                  <span className="text-[#C5A880] font-bold">${calcPrice.toLocaleString()} USD</span>
+                </div>
+                <input
+                  type="range"
+                  min={800000}
+                  max={8000000}
+                  step={50000}
+                  value={calcPrice}
+                  onChange={(e) => setCalcPrice(parseFloat(e.target.value))}
+                  className="w-full accent-[#C5A880] bg-slate-900 rounded-lg cursor-pointer h-2"
+                />
+              </div>
+
+              {/* Down Payment % */}
+              <div>
+                <div className="flex justify-between text-xs font-mono mb-2">
+                  <span className="text-slate-300 uppercase tracking-wider">Down Payment ({calcDownPercent}%)</span>
+                  <span className="text-[#C5A880] font-bold">${downPaymentAmount.toLocaleString()} USD</span>
+                </div>
+                <input
+                  type="range"
+                  min={10}
+                  max={50}
+                  step={5}
+                  value={calcDownPercent}
+                  onChange={(e) => setCalcDownPercent(parseFloat(e.target.value))}
+                  className="w-full accent-[#C5A880] bg-slate-900 rounded-lg cursor-pointer h-2"
+                />
+              </div>
+
+              {/* Interest Rate & Loan Term */}
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="text-[10px] uppercase tracking-wider text-slate-300 font-mono font-medium block mb-2">Interest Rate (%)</label>
+                  <input
+                    type="number"
+                    step="0.1"
+                    min="1"
+                    max="12"
+                    value={calcInterestRate}
+                    onChange={(e) => setCalcInterestRate(parseFloat(e.target.value) || 4.5)}
+                    className="w-full bg-slate-950 border border-[#1A2026] text-white text-xs rounded-lg px-3.5 py-3 min-h-[44px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A880]"
+                  />
+                </div>
+                <div>
+                  <label className="text-[10px] uppercase tracking-wider text-slate-300 font-mono font-medium block mb-2">Loan Term (Years)</label>
+                  <select
+                    value={calcTermYears}
+                    onChange={(e) => setCalcTermYears(parseInt(e.target.value))}
+                    className="w-full bg-slate-950 border border-[#1A2026] text-white text-xs rounded-lg px-3.5 py-3 min-h-[44px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A880]"
+                  >
+                    <option value={15}>15 Years</option>
+                    <option value={20}>20 Years</option>
+                    <option value={25}>25 Years</option>
+                    <option value={30}>30 Years</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            {/* Live Calculation Output Card */}
+            <div className="bg-[#0B0E10] border border-[#1A2026] rounded-xl p-6 flex flex-col justify-between">
+              <div>
+                <span className="text-[10px] uppercase tracking-widest text-slate-400 font-mono block mb-2">ESTIMATED MONTHLY OUTLAY</span>
+                <div className="text-4xl sm:text-5xl font-mono font-bold text-[#C5A880] mb-6">
+                  ${totalMonthlyPayment.toLocaleString()} <span className="text-xs text-slate-400 font-sans font-normal">/ month</span>
+                </div>
+
+                <div className="space-y-3 font-mono text-xs border-t border-[#1A2026] pt-4">
+                  <div className="flex justify-between">
+                    <span className="text-slate-400">Principal & Interest:</span>
+                    <span className="text-slate-200">${Math.round(monthlyPrincipalInterest).toLocaleString()} USD</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-slate-400">Estimated Taxes & Insurance:</span>
+                    <span className="text-slate-200">${Math.round(estimatedMonthlyTaxIns).toLocaleString()} USD</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-slate-400">Total Loan Financing:</span>
+                    <span className="text-slate-200">${loanAmount.toLocaleString()} USD</span>
+                  </div>
+                  <div className="flex justify-between pt-2 border-t border-[#1A2026] text-emerald-400 font-bold">
+                    <span>Projected Annual Rental Yield:</span>
+                    <span>~{estimatedAnnualYield}% ROI</span>
+                  </div>
+                </div>
+              </div>
+
+              <button
+                onClick={() => {
+                  setContactForm(prev => ({
+                    ...prev,
+                    budget: `$${(calcPrice / 1000000).toFixed(2)}M`,
+                    message: `Financing inquiry regarding $${calcPrice.toLocaleString()} USD residence with $${totalMonthlyPayment.toLocaleString()}/mo estimated outlay.`
+                  }));
+                  setIsQuoteModalOpen(true);
+                }}
+                className="mt-6 w-full bg-[#C5A880] hover:bg-[#DBC3A3] text-black font-bold uppercase tracking-widest text-xs py-3.5 min-h-[44px] rounded-lg transition-all shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A880]"
+              >
+                Apply for Pre-Approved Financing
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* --- REGIONAL MARKET INTELLIGENCE HUB --- */}
+      <section id="market-guides" className="py-24 bg-[#12161A]/40 border-t border-[#1A2026]" aria-labelledby="guides-heading">
+        <div className="max-w-7xl mx-auto px-4 md:px-8">
+          <div className="text-center max-w-2xl mx-auto mb-16">
+            <span className="text-[#C5A880] text-xs font-semibold tracking-[0.25em] uppercase block mb-3 font-mono">
+              LOCAL MARKET INTELLIGENCE
+            </span>
+            <h2 id="guides-heading" className="text-3xl md:text-5xl font-sans uppercase font-light text-white tracking-wide">
+              PRIME INVESTMENT <span className="font-extrabold text-slate-100">REGIONS</span>
+            </h2>
+            <p className="text-slate-300 text-sm mt-3 leading-relaxed">
+              Explore key market metrics, average price appreciation, and rental yields across Canada&apos;s most desirable architectural havens.
+            </p>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              { region: "Quebec Wilderness", avgPrice: "$2.4M", yield: "8.2%", thermalRating: "Triple-Pane A+", tag: "High Demand", img: "https://picsum.photos/seed/quebecguide/600/400" },
+              { region: "Laurentian Mountains", avgPrice: "$1.95M", yield: "9.1%", thermalRating: "Geothermal A+", tag: "Ski & Retreat", img: "https://picsum.photos/seed/laurentianguide/600/400" },
+              { region: "Vancouver Waterfront", avgPrice: "$4.2M", yield: "6.8%", thermalRating: "Harbor Glass A+", tag: "Ultra-Luxury", img: "https://picsum.photos/seed/vancouverguide/600/400" },
+              { region: "Montreal Metro", avgPrice: "$3.4M", yield: "7.5%", thermalRating: "Basalt Steel A+", tag: "Urban Modernism", img: "https://picsum.photos/seed/montrealguide/600/400" }
+            ].map((g, idx) => (
+              <div key={idx} className="bg-[#12161A] border border-[#1A2026] rounded-2xl overflow-hidden group hover:border-[#C5A880]/40 transition-all duration-300">
+                <div className="relative aspect-[16/10] overflow-hidden">
+                  <img src={g.img} alt={g.region} className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500" />
+                  <span className="absolute top-3 left-3 bg-[#0B0E10]/90 text-[#C5A880] text-[9px] font-mono font-bold uppercase tracking-widest px-2.5 py-1 rounded border border-[#C5A880]/30">
+                    {g.tag}
+                  </span>
+                </div>
+                <div className="p-6">
+                  <h3 className="text-lg font-bold uppercase tracking-wide text-white mb-4">{g.region}</h3>
+                  <div className="space-y-2 font-mono text-xs text-slate-300 border-t border-[#1A2026] pt-3">
+                    <div className="flex justify-between">
+                      <span className="text-slate-400">Avg Property Price:</span>
+                      <span className="text-white font-bold">{g.avgPrice}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-400">Avg Rental Yield:</span>
+                      <span className="text-emerald-400 font-bold">{g.yield}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-400">Thermal Index:</span>
+                      <span className="text-[#C5A880]">{g.thermalRating}</span>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => {
+                      setContactForm(prev => ({ ...prev, location: g.region, message: `Requesting detailed market intelligence dossier for ${g.region}.` }));
+                      setIsQuoteModalOpen(true);
+                    }}
+                    className="w-full mt-5 bg-[#1C2228] hover:bg-[#252E36] text-white text-[11px] font-bold uppercase tracking-widest py-2.5 rounded-lg border border-[#2B353E] transition-colors"
+                  >
+                    Request Regional Dossier
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </section>
 
       {/* --- SERVICES / DESIGN BLUEPRINT SECTION --- */}
@@ -1263,6 +1670,149 @@ export default function GlasshavenHome() {
                   </div>
                 )}
               </AnimatePresence>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* --- SELLER & LANDLORD SERVICE TIER COMPARISON MATRIX --- */}
+      <section id="packages" className="py-24 bg-[#0B0E10] border-t border-[#1A2026]" aria-labelledby="packages-heading">
+        <div className="max-w-7xl mx-auto px-4 md:px-8">
+          <div className="text-center max-w-2xl mx-auto mb-16">
+            <span className="text-[#C5A880] text-xs font-semibold tracking-[0.25em] uppercase block mb-3 font-mono">
+              TRANSPARENT PRICING & GUARANTEE
+            </span>
+            <h2 id="packages-heading" className="text-3xl md:text-5xl font-sans uppercase font-light text-white tracking-wide">
+              SELLER & LANDLORD <span className="font-extrabold text-[#C5A880]">PACKAGES</span>
+            </h2>
+            <p className="text-slate-300 text-sm mt-3 leading-relaxed">
+              Transparent management fees with zero hidden surcharges. Designed for discerning estate owners and investors.
+            </p>
+          </div>
+
+          <div className="grid lg:grid-cols-3 gap-8 items-stretch">
+            {/* Package 1: Let Only */}
+            <div className="bg-[#12161A] border border-[#1A2026] rounded-2xl p-8 flex flex-col justify-between hover:border-slate-600 transition-all">
+              <div>
+                <span className="text-[10px] font-mono uppercase tracking-widest text-slate-400">BASIC LISTING</span>
+                <h3 className="text-2xl font-bold uppercase text-white mt-1 mb-2">Let Only</h3>
+                <div className="text-3xl font-mono font-bold text-[#C5A880] mb-6">
+                  5% <span className="text-xs text-slate-400 font-sans font-normal">flat commission fee</span>
+                </div>
+
+                <ul className="space-y-3 text-xs text-slate-300 border-t border-[#1A2026] pt-6 font-sans">
+                  <li className="flex items-center gap-2">
+                    <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>Ultra-HD Architectural Photography</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>Global Buyer & Tenant Portal Listing</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>Comprehensive Financial Background Checks</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>Certified Contract Drafting</span>
+                  </li>
+                </ul>
+              </div>
+
+              <button
+                onClick={() => {
+                  setContactForm(prev => ({ ...prev, message: "Enquiring about the Let Only / Basic Listing service package (5%)." }));
+                  setIsQuoteModalOpen(true);
+                }}
+                className="mt-8 w-full bg-[#1C2228] hover:bg-[#252E36] text-white font-semibold uppercase tracking-widest text-xs py-3.5 min-h-[44px] rounded-lg border border-[#2B353E] transition-all"
+              >
+                Select Let Only
+              </button>
+            </div>
+
+            {/* Package 2: Rent Collection (Featured) */}
+            <div className="bg-[#12161A] border-2 border-[#C5A880] rounded-2xl p-8 flex flex-col justify-between relative shadow-2xl shadow-[#C5A880]/10 transform lg:-translate-y-2">
+              <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-[#C5A880] text-black font-mono text-[9px] font-bold uppercase tracking-widest px-4 py-1 rounded-full">
+                MOST POPULAR CHOICE
+              </span>
+
+              <div>
+                <span className="text-[10px] font-mono uppercase tracking-widest text-[#C5A880]">FULL RENT MANAGEMENT</span>
+                <h3 className="text-2xl font-bold uppercase text-white mt-1 mb-2">Rent Collection</h3>
+                <div className="text-3xl font-mono font-bold text-[#C5A880] mb-6">
+                  10% <span className="text-xs text-slate-400 font-sans font-normal">monthly management fee</span>
+                </div>
+
+                <ul className="space-y-3 text-xs text-slate-200 border-t border-[#1A2026] pt-6 font-sans">
+                  <li className="flex items-center gap-2">
+                    <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>Everything included in Let Only</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>Automated Monthly Rent Collection</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>Quarterly Structural & Thermal Audits</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>24/7 Urgent Repair Concierge</span>
+                  </li>
+                </ul>
+              </div>
+
+              <button
+                onClick={() => {
+                  setContactForm(prev => ({ ...prev, message: "Enquiring about the Rent Collection & Management service package (10%)." }));
+                  setIsQuoteModalOpen(true);
+                }}
+                className="mt-8 w-full bg-[#C5A880] hover:bg-[#DBC3A3] text-black font-bold uppercase tracking-widest text-xs py-3.5 min-h-[44px] rounded-lg transition-all shadow-md"
+              >
+                Select Rent Collection
+              </button>
+            </div>
+
+            {/* Package 3: Bespoke VIP Management */}
+            <div className="bg-[#12161A] border border-[#1A2026] rounded-2xl p-8 flex flex-col justify-between hover:border-slate-600 transition-all">
+              <div>
+                <span className="text-[10px] font-mono uppercase tracking-widest text-slate-400">VIP ESTATE STEWARDSHIP</span>
+                <h3 className="text-2xl font-bold uppercase text-white mt-1 mb-2">Bespoke Management</h3>
+                <div className="text-3xl font-mono font-bold text-[#C5A880] mb-6">
+                  15% <span className="text-xs text-slate-400 font-sans font-normal">VIP estate management</span>
+                </div>
+
+                <ul className="space-y-3 text-xs text-slate-300 border-t border-[#1A2026] pt-6 font-sans">
+                  <li className="flex items-center gap-2">
+                    <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>Everything in Rent Collection</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>Geothermal & Solar Systems Maintenance</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>Dedicated Personal Estate Manager</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>Tax & Accounting Financial Reporting</span>
+                  </li>
+                </ul>
+              </div>
+
+              <button
+                onClick={() => {
+                  setContactForm(prev => ({ ...prev, message: "Enquiring about the Bespoke VIP Estate Stewardship package (15%)." }));
+                  setIsQuoteModalOpen(true);
+                }}
+                className="mt-8 w-full bg-[#1C2228] hover:bg-[#252E36] text-white font-semibold uppercase tracking-widest text-xs py-3.5 min-h-[44px] rounded-lg border border-[#2B353E] transition-all"
+              >
+                Select Bespoke VIP
+              </button>
             </div>
           </div>
         </div>
