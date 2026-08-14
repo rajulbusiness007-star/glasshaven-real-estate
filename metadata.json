@@ -1,0 +1,6 @@
+{
+  "name": "Glasshaven",
+  "description": "An ultra-premium, modern, and interactive real estate platform inspired by contemporary glass villa architecture.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
