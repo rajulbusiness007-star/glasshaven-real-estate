@@ -213,6 +213,9 @@ export default function GlasshavenHome() {
       if (savedHistory) setSubmissionHistory(JSON.parse(savedHistory));
     }, 0);
 
+    return () => clearTimeout(timer);
+  }, []);
+
   React.useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
