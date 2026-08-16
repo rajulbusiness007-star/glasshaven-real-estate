@@ -160,6 +160,7 @@ export default function GlasshavenHome() {
   const [filterType, setFilterType] = React.useState("All");
   const [filterPrice, setFilterPrice] = React.useState("All");
   const [filterBeds, setFilterBeds] = React.useState("All");
+  const [selectedNeighborhood, setSelectedNeighborhood] = React.useState<string | null>(null);
 
   // Interactive house plan state
   const [selectedPlanId, setSelectedPlanId] = React.useState("glass-pavilion");
@@ -581,6 +582,7 @@ export default function GlasshavenHome() {
               { label: "Calculator", href: "#calculator" },
               { label: "Guides", href: "#market-guides" },
               { label: "Plans", href: "#floor-plans" },
+              { label: "Coverage", href: "#coverage" },
               { label: "Packages", href: "#packages" },
               { label: "Reviews", href: "#reviews" },
               { label: "Contact", href: "#contact" }
@@ -684,7 +686,7 @@ export default function GlasshavenHome() {
         {/* --- HERO SECTION --- */}
         <section
           id="home"
-          className="relative min-h-screen flex items-center justify-center pt-24 overflow-hidden"
+          className="relative min-h-screen flex flex-col items-center justify-center pt-28 pb-14 sm:pt-32 sm:pb-16 md:pb-24 overflow-hidden"
           aria-labelledby="hero-title"
         >
           {/* Underlay Luxury House Background with Zoom */}
@@ -699,7 +701,7 @@ export default function GlasshavenHome() {
             <div className="absolute inset-0 bg-gradient-to-t from-[#0B0E10] via-[#0B0E10]/80 to-[#0B0E10]/55" />
           </div>
 
-          <div className="relative z-10 max-w-5xl mx-auto px-4 text-center flex flex-col items-center">
+          <div className="relative z-10 max-w-5xl mx-auto px-4 text-center flex flex-col items-center w-full">
             {/* Tagline */}
             <motion.div
               initial={{ opacity: 0, y: 15 }}
@@ -780,36 +782,36 @@ export default function GlasshavenHome() {
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.8 }}
-              className="mt-12 pt-8 border-t border-slate-800/60 w-full max-w-4xl grid grid-cols-2 sm:grid-cols-5 gap-4 items-center justify-center text-center font-mono text-[10px] uppercase tracking-widest text-slate-400"
+              className="mt-10 sm:mt-12 pt-6 sm:pt-8 border-t border-slate-800/60 w-full max-w-4xl grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2 sm:gap-3 md:gap-4 items-center justify-center text-center font-mono text-[9px] sm:text-[10px] uppercase tracking-wider sm:tracking-widest text-slate-300"
             >
-              <div className="flex items-center justify-center gap-1.5 p-2 bg-[#12161A]/60 rounded-lg border border-[#1A2026]">
-                <ShieldCheck className="w-3.5 h-3.5 text-[#C5A880]" />
-                <span className="text-white font-bold">RICS</span> Certified
+              <div className="flex items-center justify-center gap-1.5 p-2 sm:p-2.5 bg-[#12161A]/80 backdrop-blur-sm rounded-lg border border-[#1A2026] hover:border-[#C5A880]/30 transition-colors">
+                <ShieldCheck className="w-3.5 h-3.5 text-[#C5A880] shrink-0" />
+                <span><strong className="text-white font-bold">RICS</strong> Certified</span>
               </div>
-              <div className="flex items-center justify-center gap-1.5 p-2 bg-[#12161A]/60 rounded-lg border border-[#1A2026]">
-                <Award className="w-3.5 h-3.5 text-[#C5A880]" />
-                <span className="text-white font-bold">ARLA</span> Propertymark
+              <div className="flex items-center justify-center gap-1.5 p-2 sm:p-2.5 bg-[#12161A]/80 backdrop-blur-sm rounded-lg border border-[#1A2026] hover:border-[#C5A880]/30 transition-colors">
+                <Award className="w-3.5 h-3.5 text-[#C5A880] shrink-0" />
+                <span><strong className="text-white font-bold">ARLA</strong> Propertymark</span>
               </div>
-              <div className="flex items-center justify-center gap-1.5 p-2 bg-[#12161A]/60 rounded-lg border border-[#1A2026]">
-                <CheckCircle2 className="w-3.5 h-3.5 text-[#C5A880]" />
-                <span className="text-white font-bold">TPO</span> Approved
+              <div className="flex items-center justify-center gap-1.5 p-2 sm:p-2.5 bg-[#12161A]/80 backdrop-blur-sm rounded-lg border border-[#1A2026] hover:border-[#C5A880]/30 transition-colors">
+                <CheckCircle2 className="w-3.5 h-3.5 text-[#C5A880] shrink-0" />
+                <span><strong className="text-white font-bold">TPO</strong> Approved</span>
               </div>
-              <div className="flex items-center justify-center gap-1.5 p-2 bg-[#12161A]/60 rounded-lg border border-[#1A2026]">
-                <Clock className="w-3.5 h-3.5 text-[#C5A880]" />
-                <span className="text-white font-bold">CMP</span> Protected
+              <div className="flex items-center justify-center gap-1.5 p-2 sm:p-2.5 bg-[#12161A]/80 backdrop-blur-sm rounded-lg border border-[#1A2026] hover:border-[#C5A880]/30 transition-colors">
+                <Clock className="w-3.5 h-3.5 text-[#C5A880] shrink-0" />
+                <span><strong className="text-white font-bold">CMP</strong> Protected</span>
               </div>
-              <div className="col-span-2 sm:col-span-1 flex items-center justify-center gap-1.5 p-2 bg-[#12161A]/60 rounded-lg border border-[#1A2026]">
-                <Star className="w-3.5 h-3.5 fill-[#C5A880] text-[#C5A880]" />
-                <span className="text-white font-bold">4.9★</span> Trustpilot
+              <div className="col-span-2 sm:col-span-1 flex items-center justify-center gap-1.5 p-2 sm:p-2.5 bg-[#12161A]/80 backdrop-blur-sm rounded-lg border border-[#1A2026] hover:border-[#C5A880]/30 transition-colors">
+                <Star className="w-3.5 h-3.5 fill-[#C5A880] text-[#C5A880] shrink-0" />
+                <span><strong className="text-white font-bold">4.9★</strong> Trustpilot</span>
               </div>
             </motion.div>
 
             {/* Scroll Indicator */}
-            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-60 hover:opacity-100 transition-opacity">
+            <div className="mt-8 sm:mt-10 flex flex-col items-center gap-2 opacity-70 hover:opacity-100 transition-opacity cursor-pointer">
               <span className="text-[10px] uppercase tracking-[0.3em] font-mono pl-1 text-slate-300">
                 Scroll to explore
               </span>
-              <div className="w-5 h-8 border border-slate-500 rounded-full flex justify-center p-1">
+              <div className="w-5 h-8 border border-slate-500/80 rounded-full flex justify-center p-1">
                 <motion.div
                   animate={{ y: [0, 10, 0] }}
                   transition={{ repeat: Infinity, duration: 1.5 }}
@@ -821,7 +823,7 @@ export default function GlasshavenHome() {
         </section>
 
         {/* --- INTEGRATED SEARCH FILTER PANEL --- */}
-        <section className="relative z-20 max-w-6xl mx-auto px-4 -mt-16" aria-labelledby="filter-heading">
+        <section className="relative z-20 max-w-6xl mx-auto px-4 mt-6 sm:mt-8 md:-mt-10 lg:-mt-14" aria-labelledby="filter-heading">
           <div className="bg-[#12161A] border border-[#1A2026] rounded-2xl p-6 shadow-2xl">
             <div className="flex items-center gap-2 mb-4">
               <Search className="w-4 h-4 text-[#C5A880]" />
@@ -2240,6 +2242,134 @@ export default function GlasshavenHome() {
           </div>
         </div>
       </section>
+
+      {/* --- REGIONAL COVERAGE & TRUST MATRIX DASHBOARD --- */}
+      <section id="coverage" className="py-20 bg-[#0B0E10] border-t border-[#1A2026] relative overflow-hidden" aria-labelledby="coverage-heading">
+        {/* Background Ambient Glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-[#C5A880]/5 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="max-w-6xl mx-auto px-4 md:px-8 relative z-10">
+          <div className="bg-[#12161A]/95 border border-[#1F262E] hover:border-[#C5A880]/30 rounded-3xl p-8 sm:p-12 shadow-2xl backdrop-blur-xl transition-all duration-300">
+            
+            {/* Header Badge */}
+            <div className="flex flex-col items-center text-center max-w-2xl mx-auto mb-10">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#1A222A] border border-[#2B3542] text-[#C5A880] text-[10px] font-mono uppercase tracking-[0.25em] font-semibold mb-4 shadow-sm">
+                <MapPin className="w-3.5 h-3.5 text-[#C5A880]" />
+                <span>WE&apos;RE IN THE NEIGHBORHOOD</span>
+              </div>
+              
+              <h2 id="coverage-heading" className="text-2xl sm:text-4xl md:text-5xl font-sans font-light uppercase tracking-wide text-white mb-4">
+                Proudly Serving <span className="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-100 to-[#C5A880]">Premier Enclaves</span>
+              </h2>
+              
+              <p className="text-slate-300 text-sm sm:text-base leading-relaxed max-w-xl">
+                Our specialized architectural advisory team covers all premier enclaves and surrounding luxury wilderness communities. Wherever your dream estate is, our private advisors are nearby.
+              </p>
+            </div>
+
+            {/* Interactive Neighborhood Pills Cloud */}
+            <div className="flex flex-wrap justify-center gap-2.5 sm:gap-3 max-w-4xl mx-auto mb-14">
+              {[
+                { name: "Mont-Tremblant", region: "Laurentians" },
+                { name: "Westmount", region: "Montreal" },
+                { name: "Outremont", region: "Montreal" },
+                { name: "Charlevoix", region: "Quebec" },
+                { name: "Vancouver Waterfront", region: "Vancouver" },
+                { name: "Golden Square Mile", region: "Montreal" },
+                { name: "Laurentian Mountains", region: "Laurentians" },
+                { name: "Lac-Beauport", region: "Quebec" },
+                { name: "Senneville", region: "Montreal" },
+                { name: "Whistler", region: "Vancouver" },
+                { name: "Point Grey", region: "Vancouver" },
+                { name: "Shaughnessy", region: "Vancouver" },
+                { name: "Estérel", region: "Laurentians" },
+                { name: "Magog Lakefront", region: "Quebec" },
+                { name: "Coal Harbour", region: "Vancouver" },
+                { name: "North Hatley", region: "Quebec" },
+                { name: "Baie-Saint-Paul", region: "Quebec" },
+                { name: "Town of Mount Royal", region: "Montreal" },
+                { name: "West Vancouver", region: "Vancouver" },
+                { name: "Lions Bay", region: "Vancouver" }
+              ].map((item, idx) => {
+                const isSelected = selectedNeighborhood === item.name;
+                return (
+                  <button
+                    key={idx}
+                    onClick={() => {
+                      setSelectedNeighborhood(item.name);
+                      setFilterLocation(item.region);
+                      const showcase = document.getElementById("properties");
+                      if (showcase) {
+                        showcase.scrollIntoView({ behavior: "smooth" });
+                      }
+                    }}
+                    className={`px-4 py-2 sm:px-5 sm:py-2.5 rounded-full text-xs sm:text-sm font-medium tracking-wide transition-all duration-200 shadow-sm flex items-center gap-2 group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A880] active:scale-95 ${
+                      isSelected
+                        ? "bg-[#C5A880] text-black border border-[#C5A880] shadow-md shadow-[#C5A880]/20 font-bold"
+                        : "bg-[#0B0E10]/85 hover:bg-[#1C232B] border border-[#222A33] hover:border-[#C5A880]/60 text-slate-200 hover:text-white"
+                    }`}
+                  >
+                    <span className={`w-1.5 h-1.5 rounded-full transition-colors ${
+                      isSelected ? "bg-black" : "bg-[#C5A880]/70 group-hover:bg-[#C5A880]"
+                    }`} />
+                    <span>{item.name}</span>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Bottom 4 Trust Pillars Strip */}
+            <div className="pt-10 border-t border-[#1F262E] grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 items-start">
+              
+              {/* Pillar 1 */}
+              <div className="flex items-center gap-3.5 group">
+                <div className="p-3 rounded-2xl bg-[#0B0E10] border border-[#1F262E] group-hover:border-[#C5A880]/40 transition-colors shrink-0 shadow-sm">
+                  <ShieldCheck className="w-6 h-6 text-[#C5A880]" />
+                </div>
+                <div>
+                  <h3 className="text-white font-bold text-xs sm:text-sm tracking-wide">Licensed & Insured</h3>
+                  <p className="text-slate-400 text-[11px] sm:text-xs">Full fiduciary & asset coverage</p>
+                </div>
+              </div>
+
+              {/* Pillar 2 */}
+              <div className="flex items-center gap-3.5 group">
+                <div className="p-3 rounded-2xl bg-[#0B0E10] border border-[#1F262E] group-hover:border-[#C5A880]/40 transition-colors shrink-0 shadow-sm">
+                  <Award className="w-6 h-6 text-[#C5A880]" />
+                </div>
+                <div>
+                  <h3 className="text-white font-bold text-xs sm:text-sm tracking-wide">RICS & OACIQ Certified</h3>
+                  <p className="text-slate-400 text-[11px] sm:text-xs">Chartered luxury brokerage</p>
+                </div>
+              </div>
+
+              {/* Pillar 3 */}
+              <div className="flex items-center gap-3.5 group">
+                <div className="p-3 rounded-2xl bg-[#0B0E10] border border-[#1F262E] group-hover:border-[#C5A880]/40 transition-colors shrink-0 shadow-sm">
+                  <Star className="w-6 h-6 fill-[#C5A880] text-[#C5A880]" />
+                </div>
+                <div>
+                  <h3 className="text-white font-bold text-xs sm:text-sm tracking-wide">4.9-Star Elite</h3>
+                  <p className="text-slate-400 text-[11px] sm:text-xs">500+ Verified luxury reviews</p>
+                </div>
+              </div>
+
+              {/* Pillar 4 */}
+              <div className="flex items-center gap-3.5 group">
+                <div className="p-3 rounded-2xl bg-[#0B0E10] border border-[#1F262E] group-hover:border-[#C5A880]/40 transition-colors shrink-0 shadow-sm">
+                  <CheckCircle2 className="w-6 h-6 text-[#C5A880]" />
+                </div>
+                <div>
+                  <h3 className="text-white font-bold text-xs sm:text-sm tracking-wide">Background Checked</h3>
+                  <p className="text-slate-400 text-[11px] sm:text-xs">Strictly confidential advisors</p>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </section>
       </main>
 
       {/* --- FOOTER --- */}
@@ -2267,6 +2397,7 @@ export default function GlasshavenHome() {
               <li><a href="#home" className="hover:text-[#C5A880] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A880] rounded">Home Showcase</a></li>
               <li><a href="#properties" className="hover:text-[#C5A880] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A880] rounded">Our Portfolio</a></li>
               <li><a href="#floor-plans" className="hover:text-[#C5A880] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A880] rounded">Floor Plan Layouts</a></li>
+              <li><a href="#coverage" className="hover:text-[#C5A880] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A880] rounded">Regional Coverage</a></li>
               <li><a href="#services" className="hover:text-[#C5A880] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A880] rounded">Planning Services</a></li>
               <li><a href="#reviews" className="hover:text-[#C5A880] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A880] rounded">Client Reviews</a></li>
             </ul>
