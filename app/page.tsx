@@ -456,7 +456,7 @@ export default function GlasshavenHome() {
                 </div>
                 <button
                   onClick={() => setIsChatOpen(false)}
-                  className="p-2 min-h-[44px] min-w-[44px] hover:bg-slate-800 rounded-lg text-slate-300 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A880] flex items-center justify-center"
+                  className="p-2 min-h-[44px] min-w-[44px] hover:bg-slate-800 rounded-lg text-slate-200 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A880] flex items-center justify-center"
                   aria-label="Close Chat Window"
                   id="close-chat-btn"
                 >
@@ -523,7 +523,7 @@ export default function GlasshavenHome() {
                   value={chatInput}
                   onChange={(e) => setChatInput(e.target.value)}
                   placeholder="Ask about properties, floor plans, services..."
-                  className="flex-1 bg-slate-950 border border-[#1A2026] text-white text-sm rounded-lg px-3 py-2.5 min-h-[44px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A880] placeholder-slate-400"
+                  className="flex-1 bg-slate-950 border border-[#1A2026] text-white text-sm rounded-lg px-3 py-2.5 min-h-[44px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A880] placeholder-slate-300"
                   aria-label="Ask AI Concierge"
                 />
                 <button
@@ -568,7 +568,7 @@ export default function GlasshavenHome() {
             <span className="text-2xl font-black tracking-[0.35em] text-white transition-colors duration-300 group-hover:text-[#C5A880] font-sans">
               GLASSHAVEN
             </span>
-            <span className="text-[9px] uppercase tracking-[0.45em] text-slate-300 font-mono pl-1">
+            <span className="text-[9px] uppercase tracking-[0.45em] text-slate-200 font-mono pl-1">
               Pure Modernism
             </span>
           </a>
@@ -590,7 +590,7 @@ export default function GlasshavenHome() {
               <a
                 key={idx}
                 href={link.href}
-                className="text-[11px] uppercase tracking-widest font-medium text-slate-300 hover:text-white transition-colors py-2 relative after:absolute after:bottom-[-4px] after:left-0 after:right-0 after:h-[1px] after:bg-[#C5A880] after:transform after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A880] rounded"
+                className="text-[11px] uppercase tracking-widest font-semibold text-slate-100 hover:text-white transition-colors py-2 relative after:absolute after:bottom-[-4px] after:left-0 after:right-0 after:h-[1px] after:bg-[#C5A880] after:transform after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A880] rounded"
               >
                 {link.label}
               </a>
@@ -619,7 +619,7 @@ export default function GlasshavenHome() {
           {/* Mobile Menu Toggle */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="p-2.5 min-h-[44px] min-w-[44px] lg:hidden text-slate-300 hover:text-white transition-colors flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A880] rounded-lg"
+            className="p-2.5 min-h-[44px] min-w-[44px] lg:hidden text-slate-200 hover:text-white transition-colors flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A880] rounded-lg"
             aria-label="Toggle Navigation Menu"
             aria-expanded={isMobileMenuOpen}
             id="mobile-menu-toggle"
@@ -734,7 +734,7 @@ export default function GlasshavenHome() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="text-base sm:text-lg text-slate-200 font-sans max-w-2xl leading-relaxed mb-10 text-center"
+              className="text-base sm:text-lg text-slate-100 font-sans max-w-2xl leading-relaxed mb-10 text-center font-normal"
             >
               We curate and engineer ultra-modern glass-walled residences across Quebec&apos;s most breathtaking wilderness settings. Precision framing meets flawless vistas.
             </motion.p>
@@ -808,7 +808,7 @@ export default function GlasshavenHome() {
 
             {/* Scroll Indicator */}
             <div className="mt-8 sm:mt-10 flex flex-col items-center gap-2 opacity-70 hover:opacity-100 transition-opacity cursor-pointer">
-              <span className="text-[10px] uppercase tracking-[0.3em] font-mono pl-1 text-slate-300">
+              <span className="text-[10px] uppercase tracking-[0.3em] font-mono pl-1 text-slate-100">
                 Scroll to explore
               </span>
               <div className="w-5 h-8 border border-slate-500/80 rounded-full flex justify-center p-1">
@@ -835,7 +835,7 @@ export default function GlasshavenHome() {
             <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
               {/* Location */}
               <div className="flex flex-col gap-1.5">
-                <label htmlFor="filter-location" className="text-[10px] uppercase tracking-wider text-slate-300 font-mono font-medium">
+                <label htmlFor="filter-location" className="text-[10px] uppercase tracking-wider text-slate-100 font-mono font-semibold">
                   Location
                 </label>
                 <select
@@ -854,7 +854,7 @@ export default function GlasshavenHome() {
 
               {/* Type */}
               <div className="flex flex-col gap-1.5">
-                <label htmlFor="filter-type" className="text-[10px] uppercase tracking-wider text-slate-300 font-mono font-medium">
+                <label htmlFor="filter-type" className="text-[10px] uppercase tracking-wider text-slate-100 font-mono font-semibold">
                   Residency Type
                 </label>
                 <select
@@ -873,7 +873,7 @@ export default function GlasshavenHome() {
 
               {/* Price Range */}
               <div className="flex flex-col gap-1.5">
-                <label htmlFor="filter-price" className="text-[10px] uppercase tracking-wider text-slate-300 font-mono font-medium">
+                <label htmlFor="filter-price" className="text-[10px] uppercase tracking-wider text-slate-100 font-mono font-semibold">
                   Price Limit
                 </label>
                 <select
@@ -891,7 +891,7 @@ export default function GlasshavenHome() {
 
               {/* Bedrooms */}
               <div className="flex flex-col gap-1.5">
-                <label htmlFor="filter-beds" className="text-[10px] uppercase tracking-wider text-slate-300 font-mono font-medium">
+                <label htmlFor="filter-beds" className="text-[10px] uppercase tracking-wider text-slate-100 font-mono font-semibold">
                   Min Bedrooms
                 </label>
                 <select
@@ -952,7 +952,7 @@ export default function GlasshavenHome() {
                   <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
                     {/* Property Type */}
                     <div className="flex flex-col gap-2">
-                      <label className="text-[10px] uppercase tracking-wider text-slate-300 font-mono font-medium">Property Type</label>
+                      <label className="text-[10px] uppercase tracking-wider text-slate-100 font-mono font-semibold">Property Type</label>
                       <select
                         value={valType}
                         onChange={(e) => setValType(e.target.value as any)}
@@ -967,7 +967,7 @@ export default function GlasshavenHome() {
 
                     {/* Bedrooms */}
                     <div className="flex flex-col gap-2">
-                      <label className="text-[10px] uppercase tracking-wider text-slate-300 font-mono font-medium">Bedrooms</label>
+                      <label className="text-[10px] uppercase tracking-wider text-slate-100 font-mono font-semibold">Bedrooms</label>
                       <select
                         value={valBeds}
                         onChange={(e) => setValBeds(parseInt(e.target.value))}
@@ -981,7 +981,7 @@ export default function GlasshavenHome() {
 
                     {/* Region */}
                     <div className="flex flex-col gap-2">
-                      <label className="text-[10px] uppercase tracking-wider text-slate-300 font-mono font-medium">Region</label>
+                      <label className="text-[10px] uppercase tracking-wider text-slate-100 font-mono font-semibold">Region</label>
                       <select
                         value={valLocation}
                         onChange={(e) => setValLocation(e.target.value)}
@@ -996,7 +996,7 @@ export default function GlasshavenHome() {
 
                     {/* Condition */}
                     <div className="flex flex-col gap-2">
-                      <label className="text-[10px] uppercase tracking-wider text-slate-300 font-mono font-medium">Condition</label>
+                      <label className="text-[10px] uppercase tracking-wider text-slate-100 font-mono font-semibold">Condition</label>
                       <select
                         value={valCondition}
                         onChange={(e) => setValCondition(e.target.value)}
@@ -1077,7 +1077,7 @@ export default function GlasshavenHome() {
               Featured <span className="font-extrabold text-slate-100">Properties</span>
             </h2>
           </div>
-          <p className="text-slate-300 text-sm max-w-md font-sans leading-relaxed">
+          <p className="text-slate-200 text-sm max-w-md font-sans leading-relaxed">
             Every home represents a synthesis of architectural vision and structural safety. Hover to reveal structural highlights.
           </p>
         </div>
@@ -1153,7 +1153,7 @@ export default function GlasshavenHome() {
                       <h3 className="text-xl sm:text-2xl font-sans uppercase font-bold tracking-wide text-white mb-3">
                         {p.name}
                       </h3>
-                      <p className="text-slate-300 text-sm leading-relaxed mb-6 font-sans">
+                      <p className="text-slate-200 text-sm leading-relaxed mb-6 font-sans">
                         {p.description}
                       </p>
 
@@ -1172,19 +1172,19 @@ export default function GlasshavenHome() {
                     <div>
                       <div className="grid grid-cols-3 gap-2 text-center py-3 border-y border-[#1A2026] mb-6">
                         <div className="flex flex-col items-center">
-                          <span className="text-slate-300 text-[9px] uppercase tracking-wider font-mono font-medium">Bedrooms</span>
+                          <span className="text-slate-200 text-[9px] uppercase tracking-wider font-mono font-semibold">Bedrooms</span>
                           <span className="text-white font-mono font-bold text-sm flex items-center gap-1 mt-0.5">
                             <BedDouble className="w-3.5 h-3.5 text-[#C5A880]" /> {p.beds}
                           </span>
                         </div>
                         <div className="flex flex-col items-center">
-                          <span className="text-slate-300 text-[9px] uppercase tracking-wider font-mono font-medium">Baths</span>
+                          <span className="text-slate-200 text-[9px] uppercase tracking-wider font-mono font-semibold">Baths</span>
                           <span className="text-white font-mono font-bold text-sm flex items-center gap-1 mt-0.5">
                             <Bath className="w-3.5 h-3.5 text-[#C5A880]" /> {p.baths}
                           </span>
                         </div>
                         <div className="flex flex-col items-center">
-                          <span className="text-slate-300 text-[9px] uppercase tracking-wider font-mono font-medium">Area</span>
+                          <span className="text-slate-200 text-[9px] uppercase tracking-wider font-mono font-semibold">Area</span>
                           <span className="text-white font-mono font-bold text-sm flex items-center gap-1 mt-0.5">
                             <Maximize2 className="w-3.5 h-3.5 text-[#C5A880]" /> {p.size} m²
                           </span>
@@ -1273,7 +1273,7 @@ export default function GlasshavenHome() {
               {/* Interest Rate & Loan Term */}
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="text-[10px] uppercase tracking-wider text-slate-300 font-mono font-medium block mb-2">Interest Rate (%)</label>
+                  <label className="text-[10px] uppercase tracking-wider text-slate-100 font-mono font-semibold block mb-2">Interest Rate (%)</label>
                   <input
                     type="number"
                     step="0.1"
@@ -1285,7 +1285,7 @@ export default function GlasshavenHome() {
                   />
                 </div>
                 <div>
-                  <label className="text-[10px] uppercase tracking-wider text-slate-300 font-mono font-medium block mb-2">Loan Term (Years)</label>
+                  <label className="text-[10px] uppercase tracking-wider text-slate-100 font-mono font-semibold block mb-2">Loan Term (Years)</label>
                   <select
                     value={calcTermYears}
                     onChange={(e) => setCalcTermYears(parseInt(e.target.value))}
@@ -1850,7 +1850,7 @@ export default function GlasshavenHome() {
                 <h3 className="text-lg font-bold tracking-wide uppercase text-white mb-3">
                   {value.title}
                 </h3>
-                <p className="text-slate-400 text-sm leading-relaxed font-sans">
+                <p className="text-slate-200 text-sm leading-relaxed font-sans">
                   {value.desc}
                 </p>
               </div>
@@ -1893,7 +1893,7 @@ export default function GlasshavenHome() {
                   <span className="text-[10px] text-slate-500 font-mono uppercase">{rev.date}</span>
                 </div>
 
-                <p className="text-slate-300 text-sm leading-relaxed font-sans italic mb-8">
+                <p className="text-slate-200 text-sm leading-relaxed font-sans italic mb-8">
                   &ldquo;{rev.review}&rdquo;
                 </p>
               </div>
@@ -1917,7 +1917,7 @@ export default function GlasshavenHome() {
             href="https://g.co/create-review-placeholder"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-xs uppercase tracking-widest font-semibold border border-slate-800 hover:border-slate-500 text-slate-300 hover:text-white py-3 px-6 rounded-lg transition-colors inline-block"
+            className="text-xs uppercase tracking-widest font-semibold border border-slate-800 hover:border-slate-500 text-slate-200 hover:text-white py-3 px-6 rounded-lg transition-colors inline-block"
           >
             View Our Google Business Profile
           </a>
@@ -1935,10 +1935,10 @@ export default function GlasshavenHome() {
             <h2 className="text-3xl md:text-5xl font-sans uppercase font-light text-white tracking-wide mb-6">
               ABOUT <span className="font-extrabold text-slate-100">GLASSHAVEN</span>
             </h2>
-            <p className="text-slate-300 text-sm leading-relaxed mb-6 font-sans">
+            <p className="text-slate-200 text-sm leading-relaxed mb-6 font-sans">
               Founded in Montreal by award-winning structural glass engineers, Glasshaven develops hyper-curated wilderness properties where modern steel structures and clear glass merge.
             </p>
-            <p className="text-slate-400 text-sm leading-relaxed mb-10 font-sans">
+            <p className="text-slate-200 text-sm leading-relaxed mb-10 font-sans">
               Our structures use intelligent high-efficiency insulation, multi-glazed active temperature panels, and structural-grade dark steel to ensure absolute durability, wind tolerance, and structural safety under intense winter conditions.
             </p>
 
@@ -2016,7 +2016,7 @@ export default function GlasshavenHome() {
             <h2 className="text-3xl md:text-4xl font-sans uppercase font-light text-white tracking-wide mb-8">
               Request a <span className="font-extrabold text-slate-100">Callback</span>
             </h2>
-            <p className="text-slate-400 text-sm leading-relaxed mb-8">
+            <p className="text-slate-200 text-sm leading-relaxed mb-8">
               Prefer a physical portfolio presentation or private site tour? Connect with our Montreal advisory desk directly or complete the encrypted briefing document.
             </p>
 
@@ -2103,7 +2103,7 @@ export default function GlasshavenHome() {
               <div className="grid sm:grid-cols-2 gap-4">
                 {/* Name */}
                 <div className="flex flex-col gap-1.5">
-                  <label htmlFor="contact-name" className="text-[10px] uppercase tracking-wider text-slate-300 font-mono font-medium">Full Name *</label>
+                  <label htmlFor="contact-name" className="text-[10px] uppercase tracking-wider text-slate-100 font-mono font-semibold">Full Name *</label>
                   <input
                     type="text"
                     id="contact-name"
@@ -2112,13 +2112,13 @@ export default function GlasshavenHome() {
                     onChange={handleFormChange}
                     required
                     placeholder="e.g. Julian Vance"
-                    className="bg-slate-950 border border-[#1A2026] text-white text-sm rounded-lg px-3.5 py-3 min-h-[44px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A880] placeholder-slate-400"
+                    className="bg-slate-950 border border-[#1A2026] text-white text-sm rounded-lg px-3.5 py-3 min-h-[44px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A880] placeholder-slate-300"
                   />
                 </div>
 
                 {/* Phone */}
                 <div className="flex flex-col gap-1.5">
-                  <label htmlFor="contact-phone" className="text-[10px] uppercase tracking-wider text-slate-300 font-mono font-medium">Phone Number *</label>
+                  <label htmlFor="contact-phone" className="text-[10px] uppercase tracking-wider text-slate-100 font-mono font-semibold">Phone Number *</label>
                   <input
                     type="tel"
                     id="contact-phone"
@@ -2127,7 +2127,7 @@ export default function GlasshavenHome() {
                     onChange={handleFormChange}
                     required
                     placeholder="e.g. +1 555-0199"
-                    className="bg-slate-950 border border-[#1A2026] text-white text-sm rounded-lg px-3.5 py-3 min-h-[44px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A880] placeholder-slate-400"
+                    className="bg-slate-950 border border-[#1A2026] text-white text-sm rounded-lg px-3.5 py-3 min-h-[44px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A880] placeholder-slate-300"
                   />
                 </div>
               </div>
@@ -2135,7 +2135,7 @@ export default function GlasshavenHome() {
               <div className="grid sm:grid-cols-2 gap-4">
                 {/* Email */}
                 <div className="flex flex-col gap-1.5">
-                  <label htmlFor="contact-email" className="text-[10px] uppercase tracking-wider text-slate-300 font-mono font-medium">Email Address *</label>
+                  <label htmlFor="contact-email" className="text-[10px] uppercase tracking-wider text-slate-100 font-mono font-semibold">Email Address *</label>
                   <input
                     type="email"
                     id="contact-email"
@@ -2144,13 +2144,13 @@ export default function GlasshavenHome() {
                     onChange={handleFormChange}
                     required
                     placeholder="e.g. julian@vance-corp.com"
-                    className="bg-slate-950 border border-[#1A2026] text-white text-sm rounded-lg px-3.5 py-3 min-h-[44px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A880] placeholder-slate-400"
+                    className="bg-slate-950 border border-[#1A2026] text-white text-sm rounded-lg px-3.5 py-3 min-h-[44px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A880] placeholder-slate-300"
                   />
                 </div>
 
                 {/* Deal Type */}
                 <div className="flex flex-col gap-1.5">
-                  <label htmlFor="contact-deal-type" className="text-[10px] uppercase tracking-wider text-slate-300 font-mono font-medium">Interest Type</label>
+                  <label htmlFor="contact-deal-type" className="text-[10px] uppercase tracking-wider text-slate-100 font-mono font-semibold">Interest Type</label>
                   <select
                     id="contact-deal-type"
                     name="dealType"
@@ -2168,7 +2168,7 @@ export default function GlasshavenHome() {
               <div className="grid sm:grid-cols-3 gap-4">
                 {/* Property Type */}
                 <div className="flex flex-col gap-1.5">
-                  <label htmlFor="contact-property-type" className="text-[10px] uppercase tracking-wider text-slate-300 font-mono font-medium">Residency Class</label>
+                  <label htmlFor="contact-property-type" className="text-[10px] uppercase tracking-wider text-slate-100 font-mono font-semibold">Residency Class</label>
                   <select
                     id="contact-property-type"
                     name="propertyType"
@@ -2185,7 +2185,7 @@ export default function GlasshavenHome() {
 
                 {/* Preferred Location */}
                 <div className="flex flex-col gap-1.5">
-                  <label htmlFor="contact-location" className="text-[10px] uppercase tracking-wider text-slate-300 font-mono font-medium">Target Location</label>
+                  <label htmlFor="contact-location" className="text-[10px] uppercase tracking-wider text-slate-100 font-mono font-semibold">Target Location</label>
                   <select
                     id="contact-location"
                     name="location"
@@ -2202,7 +2202,7 @@ export default function GlasshavenHome() {
 
                 {/* Budget */}
                 <div className="flex flex-col gap-1.5">
-                  <label htmlFor="contact-budget" className="text-[10px] uppercase tracking-wider text-slate-300 font-mono font-medium">Target Budget</label>
+                  <label htmlFor="contact-budget" className="text-[10px] uppercase tracking-wider text-slate-100 font-mono font-semibold">Target Budget</label>
                   <select
                     id="contact-budget"
                     name="budget"
@@ -2219,7 +2219,7 @@ export default function GlasshavenHome() {
 
               {/* Message */}
               <div className="flex flex-col gap-1.5">
-                <label htmlFor="contact-message" className="text-[10px] uppercase tracking-wider text-slate-300 font-mono font-medium">Brief / Message</label>
+                <label htmlFor="contact-message" className="text-[10px] uppercase tracking-wider text-slate-100 font-mono font-semibold">Brief / Message</label>
                 <textarea
                   id="contact-message"
                   name="message"
@@ -2227,7 +2227,7 @@ export default function GlasshavenHome() {
                   onChange={handleFormChange}
                   rows={4}
                   placeholder="Share any details about your specific timeline, plot requirements, or preferred layouts..."
-                  className="bg-slate-950 border border-[#1A2026] text-white text-sm rounded-lg px-3.5 py-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A880] placeholder-slate-400 resize-none"
+                  className="bg-slate-950 border border-[#1A2026] text-white text-sm rounded-lg px-3.5 py-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A880] placeholder-slate-300 resize-none"
                 />
               </div>
 
@@ -2328,7 +2328,7 @@ export default function GlasshavenHome() {
                 </div>
                 <div>
                   <h3 className="text-white font-bold text-xs sm:text-sm tracking-wide">Licensed & Insured</h3>
-                  <p className="text-slate-400 text-[11px] sm:text-xs">Full fiduciary & asset coverage</p>
+                  <p className="text-slate-300 text-[11px] sm:text-xs">Full fiduciary & asset coverage</p>
                 </div>
               </div>
 
@@ -2339,7 +2339,7 @@ export default function GlasshavenHome() {
                 </div>
                 <div>
                   <h3 className="text-white font-bold text-xs sm:text-sm tracking-wide">RICS & OACIQ Certified</h3>
-                  <p className="text-slate-400 text-[11px] sm:text-xs">Chartered luxury brokerage</p>
+                  <p className="text-slate-300 text-[11px] sm:text-xs">Chartered luxury brokerage</p>
                 </div>
               </div>
 
@@ -2350,7 +2350,7 @@ export default function GlasshavenHome() {
                 </div>
                 <div>
                   <h3 className="text-white font-bold text-xs sm:text-sm tracking-wide">4.9-Star Elite</h3>
-                  <p className="text-slate-400 text-[11px] sm:text-xs">500+ Verified luxury reviews</p>
+                  <p className="text-slate-300 text-[11px] sm:text-xs">500+ Verified luxury reviews</p>
                 </div>
               </div>
 
@@ -2361,7 +2361,7 @@ export default function GlasshavenHome() {
                 </div>
                 <div>
                   <h3 className="text-white font-bold text-xs sm:text-sm tracking-wide">Background Checked</h3>
-                  <p className="text-slate-400 text-[11px] sm:text-xs">Strictly confidential advisors</p>
+                  <p className="text-slate-300 text-[11px] sm:text-xs">Strictly confidential advisors</p>
                 </div>
               </div>
 
@@ -2385,7 +2385,7 @@ export default function GlasshavenHome() {
                 Pure Modernism
               </span>
             </a>
-            <p className="text-slate-400 pr-4 leading-relaxed">
+            <p className="text-slate-200 pr-4 leading-relaxed">
               Precision design meets absolute wilderness. We develop steel-framed, thermal glass residences that redefine modern real estate.
             </p>
           </div>
@@ -2406,7 +2406,7 @@ export default function GlasshavenHome() {
           {/* Capabilities */}
           <div>
             <h4 className="text-xs uppercase tracking-widest font-bold text-white mb-4">Core Capabilities</h4>
-            <ul className="space-y-2.5 text-slate-400">
+            <ul className="space-y-2.5 text-slate-200">
               <li>01 Property Showcase Tours</li>
               <li>02 Sun & Privacy Site Planning</li>
               <li>03 High-Efficiency Building Design</li>
@@ -2418,13 +2418,13 @@ export default function GlasshavenHome() {
           {/* Social & Contact (Local SEO) */}
           <div className="flex flex-col gap-4">
             <h4 className="text-xs uppercase tracking-widest font-bold text-white">Contact & Social</h4>
-            <p className="text-slate-300 font-mono">{AGENCY_PHONE}<br />advisor@glasshaven.com</p>
+            <p className="text-slate-200 font-mono">{AGENCY_PHONE}<br />advisor@glasshaven.com</p>
             {/* Social icons */}
             <div className="flex gap-3">
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="p-2.5 min-h-[44px] min-w-[44px] bg-slate-900 border border-[#1A2026] rounded-lg text-slate-300 hover:text-white transition-colors flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A880]" aria-label="Instagram Profile">
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="p-2.5 min-h-[44px] min-w-[44px] bg-slate-900 border border-[#1A2026] rounded-lg text-slate-200 hover:text-white transition-colors flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A880]" aria-label="Instagram Profile">
                 IG
               </a>
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="p-2.5 min-h-[44px] min-w-[44px] bg-slate-900 border border-[#1A2026] rounded-lg text-slate-300 hover:text-white transition-colors flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A880]" aria-label="Facebook Profile">
+              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="p-2.5 min-h-[44px] min-w-[44px] bg-slate-900 border border-[#1A2026] rounded-lg text-slate-200 hover:text-white transition-colors flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A880]" aria-label="Facebook Profile">
                 FB
               </a>
               <a href={defaultWALink} target="_blank" rel="noopener noreferrer" className="p-2.5 min-h-[44px] min-w-[44px] bg-slate-900 border border-[#1A2026] rounded-lg text-slate-300 hover:text-[#C5A880] transition-colors flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A880]" aria-label="WhatsApp Hotline">
@@ -2434,7 +2434,7 @@ export default function GlasshavenHome() {
           </div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 md:px-8 border-t border-slate-900 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-slate-400 text-[10px] font-mono">
+        <div className="max-w-7xl mx-auto px-4 md:px-8 border-t border-slate-900 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-slate-300 text-[10px] font-mono">
           <p>© {new Date().getFullYear()} Glasshaven Real Estate Ltd. All structural engineering reserved.</p>
           <div className="flex gap-4">
             <a href="#privacy" className="hover:text-slate-200 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A880]">Privacy Policy</a>
@@ -2469,7 +2469,7 @@ export default function GlasshavenHome() {
             >
               <button
                 onClick={() => setIsQuoteModalOpen(false)}
-                className="absolute top-4 right-4 p-2 min-h-[44px] min-w-[44px] hover:bg-slate-800 rounded-lg text-slate-300 hover:text-white transition-colors flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A880]"
+                className="absolute top-4 right-4 p-2 min-h-[44px] min-w-[44px] hover:bg-slate-800 rounded-lg text-slate-200 hover:text-white transition-colors flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A880]"
                 aria-label="Close Quote Request Modal"
                 id="close-modal-btn"
               >
@@ -2497,7 +2497,7 @@ export default function GlasshavenHome() {
               ) : (
                 <form onSubmit={handleFormSubmit} className="space-y-4" aria-label="Acquisition Inquiry Form">
                   <div className="flex flex-col gap-1.5">
-                    <label htmlFor="modal-name" className="text-[10px] uppercase tracking-wider text-slate-300 font-mono font-medium">Full Name *</label>
+                    <label htmlFor="modal-name" className="text-[10px] uppercase tracking-wider text-slate-100 font-mono font-semibold">Full Name *</label>
                     <input
                       type="text"
                       id="modal-name"
@@ -2506,13 +2506,13 @@ export default function GlasshavenHome() {
                       onChange={handleFormChange}
                       required
                       placeholder="e.g. Julian Vance"
-                      className="bg-slate-950 border border-[#1A2026] text-white text-xs rounded-lg px-3.5 py-3 min-h-[44px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A880] placeholder-slate-400"
+                      className="bg-slate-950 border border-[#1A2026] text-white text-xs rounded-lg px-3.5 py-3 min-h-[44px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A880] placeholder-slate-300"
                     />
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
                     <div className="flex flex-col gap-1.5">
-                      <label htmlFor="modal-phone" className="text-[10px] uppercase tracking-wider text-slate-300 font-mono font-medium">Phone Number *</label>
+                      <label htmlFor="modal-phone" className="text-[10px] uppercase tracking-wider text-slate-100 font-mono font-semibold">Phone Number *</label>
                       <input
                         type="tel"
                         id="modal-phone"
@@ -2521,11 +2521,11 @@ export default function GlasshavenHome() {
                         onChange={handleFormChange}
                         required
                         placeholder="e.g. +1 555-0199"
-                        className="bg-slate-950 border border-[#1A2026] text-white text-xs rounded-lg px-3.5 py-3 min-h-[44px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A880] placeholder-slate-400"
+                        className="bg-slate-950 border border-[#1A2026] text-white text-xs rounded-lg px-3.5 py-3 min-h-[44px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A880] placeholder-slate-300"
                       />
                     </div>
                     <div className="flex flex-col gap-1.5">
-                      <label htmlFor="modal-email" className="text-[10px] uppercase tracking-wider text-slate-300 font-mono font-medium">Email Address *</label>
+                      <label htmlFor="modal-email" className="text-[10px] uppercase tracking-wider text-slate-100 font-mono font-semibold">Email Address *</label>
                       <input
                         type="email"
                         id="modal-email"
@@ -2534,20 +2534,20 @@ export default function GlasshavenHome() {
                         onChange={handleFormChange}
                         required
                         placeholder="e.g. julian@vance-corp.com"
-                        className="bg-slate-950 border border-[#1A2026] text-white text-xs rounded-lg px-3.5 py-3 min-h-[44px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A880] placeholder-slate-400"
+                        className="bg-slate-950 border border-[#1A2026] text-white text-xs rounded-lg px-3.5 py-3 min-h-[44px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A880] placeholder-slate-300"
                       />
                     </div>
                   </div>
 
                   <div className="flex flex-col gap-1.5">
-                    <label htmlFor="modal-message" className="text-[10px] uppercase tracking-wider text-slate-300 font-mono font-medium">Your Specific Brief</label>
+                    <label htmlFor="modal-message" className="text-[10px] uppercase tracking-wider text-slate-100 font-mono font-semibold">Your Specific Brief</label>
                     <textarea
                       id="modal-message"
                       name="message"
                       value={contactForm.message}
                       onChange={handleFormChange}
                       rows={3}
-                      className="bg-slate-950 border border-[#1A2026] text-white text-xs rounded-lg px-3.5 py-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A880] placeholder-slate-400 resize-none"
+                      className="bg-slate-950 border border-[#1A2026] text-white text-xs rounded-lg px-3.5 py-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A880] placeholder-slate-300 resize-none"
                     />
                   </div>
 
